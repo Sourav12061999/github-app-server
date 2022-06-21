@@ -6,6 +6,7 @@ const upload = require("./Utils/File.upload");
 const readFile = require("./Utils/readCSV");
 const readFilePath = require("./Utils/readPath");
 const Cohort=require("./Schemas/cohort.schema");
+const Students=require("./Schemas/student.schema");
 const cohortValidation = require("./Utils/cohortValidation");
 const app = express();
 
@@ -41,6 +42,17 @@ app.get("/api/Cohorts",async (req,res) =>{
   }
 })// This is for getting all the Cohort names 
 
+app.get("/api/students/:cohort",async (req,res) =>{
+ try {
+  let data = await Students.find({cohort:req.params.cohort}).lean().exec();
+  res.status(200).json(data);
+ } catch (error) {
+   res.status(404).json({
+    isError:true,
+    error,
+   })
+ }
+})
 
 app.get('/api/test',(req,res) =>{
   res.status(200).json({
