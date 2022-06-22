@@ -52,7 +52,7 @@ app.get("/api/students/:cohort",async (req,res) =>{
     error,
    })
  }
-})
+})// Getting all students under a perticular cohort
 
 app.get('/api/test',(req,res) =>{
   res.status(200).json({
