@@ -3,11 +3,11 @@ const { default: axios } = require("axios");
 const addToTeam = async (username, team) => {
   try {
     await axios.put(
-      `https://api.github.com/orgs/masai-course/teams/Cohort-${team}/memberships/${username}`,
+      `https://api.github.com/orgs/masai-course/teams/Cohort-10/memberships/${username}`,
       {
         method: "PUT",
         headers: {
-          Authorization: "Bearer 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",
+          Authorization: "Bearer   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",
         },
       }
     );
