@@ -11,9 +11,9 @@ const readFile=(path,cohort) =>{
       results.forEach(async (el) => {
         let status;
         if(await checkUsername(el.github_username) === true){
-          status="Correct Username";
+          status="CORRECT USERNAME";
         }else{
-          status="Wrong Username";
+          status="WRONG USERNAME";
         }
         createUser(el,cohort,status);// Create user will all data and the user's appropriate status
       })
