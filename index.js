@@ -55,7 +55,7 @@ app.get("/api/students/:cohort", async (req, res) => {
 app.put("/api/students", async (req, res) => {
   try {
     let data = await Students.findByIdAndUpdate(req.body._id,{
-      name:req.body.name,
+      name:req.body.name.toLowerCase(),
       student_code:req.body.student_code,
       status:req.body.status,
       github_username:req.body.github_username,
@@ -63,7 +63,6 @@ app.put("/api/students", async (req, res) => {
     })
       .lean()
       .exec();
-    console.log(req.body);
     res.status(200).json({
       isError: false,
       msg: "Data Got Updated",
