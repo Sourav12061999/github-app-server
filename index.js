@@ -54,25 +54,55 @@ app.get("/api/students/:cohort", async (req, res) => {
 
 app.put("/api/students", async (req, res) => {
   try {
-    let data = await Students.findByIdAndUpdate(req.body._id, req.body).lean().exec();
+    let data = await Students.findByIdAndUpdate(req.body._id,{
+      name:req.body.name,
+      student_code:req.body.student_code,
+      status:req.body.status,
+      github_username:req.body.github_username,
+      cohort:req.body.cohort,
+    })
+      .lean()
+      .exec();
     console.log(req.body);
     res.status(200).json({
-      isError:false,
-      msg:"Data Got Updated",
-    })
+      isError: false,
+      msg: "Data Got Updated",
+    });
   } catch (error) {
     res.status(404).json({
-      isError:true,
-      msg:"Some Error Occoured",
-    })
+      isError: true,
+      msg: "Some Error Occoured",
+    });
   }
-});// This is for updating student data
+}); // This is for updating student data
 app.get("/api/test", (req, res) => {
   res.status(200).json({
     isError: false,
     msg: "Aleast fetch is working",
   });
-});
+}); // This is For testing Purposes
+
+app.get("/api/students/:cohort/:filter", async (req, res) => {
+  try {
+    if (req.params.filter === "all") {
+      let data = await Students.find({ cohort: req.params.cohort })
+        .lean()
+        .exec();
+      res.status(200).json(data);
+    } else {
+      let data = await Students.find({
+        cohort: req.params.cohort,
+        status: req.params.filter,
+      })
+        .lean()
+        .exec();
+      res.status(200).json(data);
+    }
+  } catch (error) {
+    res.status(404).json({ isError: true, msg: error });
+  }
+});// Getting all students under a perticular cohort and status
+
 const connet = async () => {
   await mongoose.connect(process.env.mongoDB_URI);
 };
